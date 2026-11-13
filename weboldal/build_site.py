@@ -46,6 +46,7 @@ home = home.replace('Nézd meg, hol veheted át', 'Előrendelést indítok').rep
 home = home.replace('class="text-link"', 'class="button button-secondary"')
 home = home.replace('class="button button-outline"', 'class="button button-secondary"')
 home = re.sub(r'(<div class="offer-body">.*?<a) href=', r'\1 class="button button-secondary" href=', home, flags=re.S)
+home = home.replace('Mikor találok nyitva?', 'Reggeliznék egy jót')
 home = re.sub(r'(<span class="eyebrow">)0[1-5] / ', r'\1', home)
 home = home.replace('<div class="steps"><span><b>01</b> Válassz</span><span><b>02</b> Írd meg a részleteket</span><span><b>03</b> Várd a visszajelzésünket</span></div>', '<ol class="steps" aria-label="Az előrendelés menete"><li><b>1</b><span>Válassz</span></li><li><b>2</b><span>Írd meg a részleteket</span></li><li><b>3</b><span>Várd a visszajelzésünket</span></li></ol>')
 home = home.replace('>Előrendelést indítok <span', '>Előrendelek <span')
