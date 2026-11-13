@@ -48,6 +48,7 @@ home = re.sub(r'(<span class="eyebrow">)0[1-5] / ', r'\1', home)
 home = home.replace('<div class="steps"><span><b>01</b> Válassz</span><span><b>02</b> Írd meg a részleteket</span><span><b>03</b> Várd a visszajelzésünket</span></div>', '<ol class="steps" aria-label="Az előrendelés menete"><li><b>1</b><span>Válassz</span></li><li><b>2</b><span>Írd meg a részleteket</span></li><li><b>3</b><span>Várd a visszajelzésünket</span></li></ol>')
 home = home.replace('>Előrendelést indítok <span', '>Előrendelek <span')
 home = home.replace('<div><span>Kedd–péntek</span><strong>7:00–14:00</strong></div><div><span>Szombat</span><strong>7:00–14:00</strong></div>', '<div><span>Kedd–szombat</span><strong>7:00–14:00</strong></div>')
+home = home.replace('<div class="about-photo"><img src="assets/hands.webp" alt="Lisztes kézzel formált tészta"', '<div class="about-photo"><img src="assets/bakery-counter.webp" alt="Friss péksütemények a pékség pultjában"')
 start, end = chrome(dict(slug="index", title="Kovászos pékség és reggeliző Pécsen", description="Friss kovászos kenyér, péksütemény és reggeli Pécs belvárosában. Egész kenyér és torta előrendelhető."))
 (SITE / "index.html").write_text(start + without_button_arrows(home) + end, encoding="utf-8")
 
