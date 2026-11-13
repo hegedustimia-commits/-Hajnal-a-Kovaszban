@@ -20,6 +20,12 @@ copy2(ROOT / "pages.js", SITE / "pages.js")
 
 prototype = (ROOT / "tervek" / "02-plakat" / "index.html").read_text(encoding="utf-8")
 
+def without_button_arrows(html):
+    def clean(match):
+        button = re.sub(r'\s*<span aria-hidden="true">[↗↘↓]</span>', '', match.group(0))
+        return re.sub(r'\s+[↗↘↓](?=</(?:a|button)>)', '', button)
+    return re.sub(r'<(?:a|button)\b[^>]*class="[^"]*\bbutton\b[^"]*"[^>]*>.*?</(?:a|button)>', clean, html, flags=re.S)
+
 def chrome(page):
     head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{page['title']} | Hajnal Kovászos Pékség</title><meta name="description" content="{page['description']}"><link rel="icon" type="image/svg+xml" href="assets/hajnal-sun.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head><body class="site-final page-{page['slug']}" id="top">'''
     header = re.search(r'(<a class="skip".*?</header>)', prototype, re.S).group(1)
@@ -31,7 +37,7 @@ def chrome(page):
 
 def page(slug, title, description, content):
     start, end = chrome(dict(slug=slug, title=title, description=description))
-    (SITE / f"{slug}.html").write_text(start + '<main id="tartalom">' + content + '</main>' + end, encoding="utf-8")
+    (SITE / f"{slug}.html").write_text(start + '<main id="tartalom">' + without_button_arrows(content) + '</main>' + end, encoding="utf-8")
 
 home = re.search(r'(<main id="tartalom">.*?</main>)', prototype, re.S).group(1)
 home = home.replace('../../assets/', 'assets/').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
@@ -43,7 +49,7 @@ home = home.replace('<div class="steps"><span><b>01</b> Válassz</span><span><b>
 home = home.replace('>Előrendelést indítok <span', '>Előrendelek <span')
 home = home.replace('<div><span>Kedd–péntek</span><strong>7:00–14:00</strong></div><div><span>Szombat</span><strong>7:00–14:00</strong></div>', '<div><span>Kedd–szombat</span><strong>7:00–14:00</strong></div>')
 start, end = chrome(dict(slug="index", title="Kovászos pékség és reggeliző Pécsen", description="Friss kovászos kenyér, péksütemény és reggeli Pécs belvárosában. Egész kenyér és torta előrendelhető."))
-(SITE / "index.html").write_text(start + home + end, encoding="utf-8")
+(SITE / "index.html").write_text(start + without_button_arrows(home) + end, encoding="utf-8")
 
 def hero(eyebrow, title, lead, image=None, alt=""):
     media = f'<div class="inner-hero-image"><img src="assets/{image}.webp" alt="{alt}"></div>' if image else ''
