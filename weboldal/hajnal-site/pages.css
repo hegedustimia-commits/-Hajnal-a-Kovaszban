@@ -20,4 +20,5 @@
 @media(max-width:900px){.site-final .poster-bottom{grid-template-columns:1fr 2fr}.site-final .steps li{grid-template-columns:28px minmax(0,1fr) 28px;padding:12px;font-size:12px}.site-final .steps li:not(:last-child):after{right:12px;width:28px;height:28px}.site-final .steps b{width:28px;height:28px}}
 @media(max-width:680px){.site-final .poster-bottom{display:block;min-height:0;padding:20px 0}.site-final .poster-bottom p{font-size:16px;margin-top:9px}.site-final .steps{grid-template-columns:1fr;gap:12px}.site-final .steps li{grid-template-columns:34px minmax(0,1fr) 34px;min-height:60px;padding:12px 18px;font-size:14px}.site-final .steps li:not(:last-child):after{content:'↓';right:18px;width:34px;height:34px}.site-final .hero-actions{justify-content:center;gap:10px}.site-final .hero-actions .button{gap:10px;padding-left:15px;padding-right:15px}}
 .site-final .poster-bottom span{color:var(--cherry)}
-.site-final .sunmark span:before{content:'';position:absolute;left:0;top:-8px;width:2px;height:8px;background:var(--cherry);transform:rotate(-45deg)}
+.site-final .sunmark{border:0;overflow:visible;background:url('assets/hajnal-sun-logo.svg') center/contain no-repeat}
+.site-final .sunmark:before,.site-final .sunmark:after,.site-final .sunmark span{display:none}

@@ -12,6 +12,7 @@ SITE.mkdir(exist_ok=True)
 for asset in (ROOT / "assets").glob("*.webp"):
     copy2(asset, SITE / "assets" / asset.name)
 copy2(ROOT / "assets" / "hajnal-sun.svg", SITE / "assets" / "hajnal-sun.svg")
+copy2(ROOT / "assets" / "hajnal-sun-logo.svg", SITE / "assets" / "hajnal-sun-logo.svg")
 copy2(ROOT.parent / "letoltheto" / "hajnal-kovaszos-receptek.pdf", SITE / "assets" / "hajnal-kovaszos-receptek.pdf")
 copy2(ROOT / "style.css", SITE / "style.css")
 copy2(ROOT / "site.js", SITE / "site.js")
