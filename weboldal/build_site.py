@@ -11,6 +11,7 @@ SITE.mkdir(exist_ok=True)
 
 for asset in (ROOT / "assets").glob("*.webp"):
     copy2(asset, SITE / "assets" / asset.name)
+copy2(ROOT / "assets" / "hajnal-sun.svg", SITE / "assets" / "hajnal-sun.svg")
 copy2(ROOT.parent / "letoltheto" / "hajnal-kovaszos-receptek.pdf", SITE / "assets" / "hajnal-kovaszos-receptek.pdf")
 copy2(ROOT / "style.css", SITE / "style.css")
 copy2(ROOT / "site.js", SITE / "site.js")
@@ -20,9 +21,10 @@ copy2(ROOT / "pages.js", SITE / "pages.js")
 prototype = (ROOT / "tervek" / "02-plakat" / "index.html").read_text(encoding="utf-8")
 
 def chrome(page):
-    head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{page['title']} | Hajnal Kovászos Pékség</title><meta name="description" content="{page['description']}"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head><body class="site-final page-{page['slug']}" id="top">'''
+    head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{page['title']} | Hajnal Kovászos Pékség</title><meta name="description" content="{page['description']}"><link rel="icon" type="image/svg+xml" href="assets/hajnal-sun.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head><body class="site-final page-{page['slug']}" id="top">'''
     header = re.search(r'(<a class="skip".*?</header>)', prototype, re.S).group(1)
     header = header.replace('href="#top"', 'href="index.html"').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
+    header = re.sub(r'<a class="nav-cta".*?</a>', '', header)
     footer = re.search(r'(<footer class="footer".*?</footer>)', prototype, re.S).group(1)
     footer = footer.replace('<div class="foot-bottom">', '<div class="footer-legal"><a href="adatkezeles.html">Adatkezelési tájékoztató</a></div><div class="foot-bottom">')
     return head + header, footer + '<script src="site.js" defer></script><script src="pages.js" defer></script></body></html>'
@@ -35,6 +37,11 @@ home = re.search(r'(<main id="tartalom">.*?</main>)', prototype, re.S).group(1)
 home = home.replace('../../assets/', 'assets/').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
 home = re.sub(r'<p class="prototype-note">.*?</p>', '', home)
 home = home.replace('Nézd meg, hol veheted át', 'Előrendelést indítok').replace('href="kapcsolat.html">Előrendelést indítok', 'href="elorendeles.html">Előrendelést indítok')
+home = home.replace('class="text-link" href="kinalat.html">Mi sül ma?', 'class="button button-outline" href="kinalat.html">Mi sül ma?')
+home = re.sub(r'(<span class="eyebrow">)0[1-5] / ', r'\1', home)
+home = home.replace('<div class="steps"><span><b>01</b> Válassz</span><span><b>02</b> Írd meg a részleteket</span><span><b>03</b> Várd a visszajelzésünket</span></div>', '<ol class="steps" aria-label="Az előrendelés menete"><li><b>1</b><span>Válassz</span></li><li><b>2</b><span>Írd meg a részleteket</span></li><li><b>3</b><span>Várd a visszajelzésünket</span></li></ol>')
+home = home.replace('>Előrendelést indítok <span', '>Előrendelek <span')
+home = home.replace('<div><span>Kedd–péntek</span><strong>7:00–14:00</strong></div><div><span>Szombat</span><strong>7:00–14:00</strong></div>', '<div><span>Kedd–szombat</span><strong>7:00–14:00</strong></div>')
 start, end = chrome(dict(slug="index", title="Kovászos pékség és reggeliző Pécsen", description="Friss kovászos kenyér, péksütemény és reggeli Pécs belvárosában. Egész kenyér és torta előrendelhető."))
 (SITE / "index.html").write_text(start + home + end, encoding="utf-8")
 
