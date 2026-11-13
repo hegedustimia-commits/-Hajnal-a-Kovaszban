@@ -7,3 +7,5 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 .mosaic-intro{align-self:start;padding-top:85px}
 @media(max-width:900px){.mosaic-intro{padding-top:30px}}
+.sunmark{border:0;overflow:visible;background:url('assets/hajnal-sun-logo.svg') center/contain no-repeat}
+.sunmark:before,.sunmark:after,.sunmark span{display:none}
