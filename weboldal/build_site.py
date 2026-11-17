@@ -45,6 +45,7 @@ def page(slug, title, description, content):
 
 home = re.search(r'(<main id="tartalom">.*?</main>)', prototype, re.S).group(1)
 home = home.replace('../../assets/', 'assets/').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
+home = home.replace('<div class="hours">', '<div class="hours paper-steps">', 1)
 home = home.replace('<div class="poster-image poster-main"><img src="assets/bread.webp" alt="Kovászos kenyér közelről"', '<div class="poster-image poster-main"><img src="assets/heart_bread.webp" alt="Szív alakú kovászos kenyér"')
 home = re.sub(r'<p class="prototype-note">.*?</p>', '', home)
 home = home.replace('Nézd meg, hol veheted át', 'Előrendelést indítok').replace('href="kapcsolat.html">Előrendelést indítok', 'href="elorendeles.html">Előrendelést indítok')
