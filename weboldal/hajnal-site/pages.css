@@ -37,10 +37,11 @@
 .site-final .catalog-bread-photo{height:310px;overflow:hidden;border-radius:170px 7px 7px 7px}
 .site-final .catalog-bread-photo img{width:100%;height:100%;object-fit:cover}
 @media(max-width:680px){.site-final .catalog-intro{grid-template-columns:1fr;gap:28px}.site-final .catalog-bread-photo{height:270px}}
-.page-kinalat .inner-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.page-kinalat .inner-hero-image{height:auto;aspect-ratio:16/9;border-radius:7px 120px 7px 7px}
-.page-kinalat .inner-hero-image img{object-position:center 42%}
-@media(max-width:900px){.page-kinalat .inner-hero{grid-template-columns:1fr}.page-kinalat .inner-hero-image{width:100%;max-width:none}}
+.page-kinalat .inner-hero{display:flex;align-items:center;min-height:480px;padding:64px clamp(28px,6vw,90px);border:0;background:linear-gradient(90deg,rgba(37,26,20,.86) 0%,rgba(37,26,20,.67) 42%,rgba(37,26,20,.1) 100%),url('assets/catalog_hero.webp') center 43%/cover no-repeat;color:var(--cream)}
+.page-kinalat .inner-hero>div{max-width:700px}
+.page-kinalat .inner-hero .eyebrow{color:#f4c7aa}
+.page-kinalat .inner-hero h1,.page-kinalat .inner-hero p{color:var(--cream)}
+@media(max-width:680px){.page-kinalat .inner-hero{min-height:440px;margin-left:18px;margin-right:18px;padding:38px 24px;background-image:linear-gradient(90deg,rgba(37,26,20,.84),rgba(37,26,20,.5)),url('assets/catalog_hero.webp')}}
 
 /* Az előrendelés három lépése egy összefüggő útvonalon. */
 .site-final .steps{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;max-width:900px;margin:38px 0 36px}
