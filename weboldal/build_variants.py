@@ -16,6 +16,9 @@ photos = {
     "breakfast": "pexels-yunustug-33059871.jpg",
     "cake": "pexels-polina-tankilevitch-4110003.jpg",
     "coffee": "pexels-nati-87264186-25949444.jpg",
+    "baker_oven": "pexels-yasin-onus-520099596-36445126.jpg",
+    "dough_hands": "pexels-klaus-nielsen-6294400.jpg",
+    "workshop_dough": "pexels-travel-with-lenses-734723610-30918876.jpg",
 }
 
 for key, filename in photos.items():

@@ -69,9 +69,10 @@ class CoverPoster(Flowable):
         c.setFont("Arial-Bold", 9)
         c.drawCentredString(self.width / 2, 128, "A KIS PÉKSÉG A SARKON  ·  PÉCS")
         c.setFillColor(INK)
-        c.setFont("Georgia-Bold", 39)
-        c.drawCentredString(self.width / 2, 78, "KOVÁSZOS")
-        c.drawCentredString(self.width / 2, 34, "RECEPTEK")
+        c.setFont("Georgia-Bold", 29)
+        c.drawCentredString(self.width / 2, 98, "HAJNAL")
+        c.drawCentredString(self.width / 2, 62, "KOVÁSZOS")
+        c.drawCentredString(self.width / 2, 26, "RECEPTEK")
 
 class RecipeLabel(Flowable):
     def __init__(self, number):
@@ -92,7 +93,7 @@ class RecipeLabel(Flowable):
 class RecipeDoc(BaseDocTemplate):
     def __init__(self, path):
         super().__init__(str(path), pagesize=A4, leftMargin=50, rightMargin=50,
-                         topMargin=93, bottomMargin=54, title="Kovászos receptek | Hajnal")
+                         topMargin=93, bottomMargin=54, title="Hajnal kovászos receptek")
         frame = Frame(self.leftMargin, self.bottomMargin, self.width, self.height,
                       leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
         self.addPageTemplates(PageTemplate(id="recipe", frames=frame, onPage=self.decorate))
