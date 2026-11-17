@@ -18,7 +18,7 @@ photos = {
     "coffee": "pexels-nati-87264186-25949444.jpg",
     "baker_oven": "pexels-yasin-onus-520099596-36445126.jpg",
     "dough_hands": "pexels-klaus-nielsen-6294400.jpg",
-    "workshop_dough": "pexels-travel-with-lenses-734723610-30918876.jpg",
+    "workshop_dough": "kovasz.jpg",
     "catalog_bread": "pexels-aygnedalya-296473942-24245231.jpg",
     "catalog_hero": "pexels-tahaasamett-14565958.jpg",
 }
