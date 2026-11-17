@@ -21,3 +21,18 @@
 @media(max-width:680px){.site-final .poster-bottom{display:block;min-height:0;padding:20px 0}.site-final .poster-bottom p{font-size:16px;margin-top:9px}.site-final .steps{grid-template-columns:1fr;gap:12px}.site-final .steps li{grid-template-columns:34px minmax(0,1fr) 34px;min-height:60px;padding:12px 18px;font-size:14px}.site-final .steps li:not(:last-child):after{content:'↓';right:18px;width:34px;height:34px}.site-final .hero-actions{justify-content:center;gap:10px}.site-final .hero-actions .button{gap:10px;padding-left:15px;padding-right:15px}}
 .site-final .poster-bottom span{color:var(--cherry)}
 .site-final .cover-sun{width:120px;height:100px;background:url('assets/hajnal-sun-logo.svg') center/contain no-repeat;margin:auto auto 5px}
+
+/* Az előrendelés három lépése egy összefüggő útvonalon. */
+.site-final .steps{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;max-width:900px;margin:38px 0 36px}
+.site-final .steps::before{content:'';position:absolute;top:26px;left:16.666%;right:16.666%;height:2px;background:#f4d3bf}
+.site-final .steps li{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;gap:16px;min-height:0;padding:0 12px;background:none;border:0;color:var(--cream);text-align:center;font-size:15px}
+.site-final .steps li span{grid-column:auto;text-align:center;background:none;border:0;border-radius:0;padding:0;font-size:15px;font-weight:700}
+.site-final .steps li:not(:last-child)::after{content:none}
+.site-final .steps b{position:relative;z-index:1;width:52px;height:52px;border:2px solid var(--cream);background:var(--cream);color:var(--cherry);font:700 21px var(--serif)}
+@media(max-width:680px){
+  .site-final .steps{display:flex;flex-direction:column;gap:0;margin:32px 0 34px}
+  .site-final .steps::before{top:25px;bottom:25px;left:25px;right:auto;width:2px;height:auto}
+  .site-final .steps li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:18px;min-height:78px;padding:0;text-align:left;font-size:16px}
+  .site-final .steps li span{text-align:left;font-size:16px}
+  .site-final .steps b{width:52px;height:52px}
+}
