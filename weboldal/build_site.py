@@ -31,6 +31,7 @@ def chrome(page):
     head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{page['title']} | Hajnal Kovászos Pékség</title><meta name="description" content="{page['description']}"><link rel="icon" type="image/svg+xml" href="assets/hajnal-sun.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head><body class="site-final page-{page['slug']}" id="top">'''
     header = re.search(r'(<a class="skip".*?</header>)', prototype, re.S).group(1)
     header = header.replace('href="#top"', 'href="index.html"').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
+    header = header.replace('<span>Pécs belvárosában</span>', '<span>Fiktív vizsgademó · Pécs</span>')
     header = re.sub(r'<a class="nav-cta".*?</a>', '', header)
     footer = re.search(r'(<footer class="footer".*?</footer>)', prototype, re.S).group(1)
     footer = footer.replace('<div class="foot-bottom">', '<div class="footer-legal"><a href="adatkezeles.html">Adatkezelési tájékoztató</a></div><div class="foot-bottom">')

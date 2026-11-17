@@ -6,7 +6,7 @@ Fiktív pécsi kovászos pékség és reggeliző reszponzív, statikus weboldala
 
 ## Hol tartunk most
 
-A D arculatból készült második, retró plakátos változat a kiválasztott irány. A teljes statikus oldal elkészült, kilenc HTML-oldallal, két űrlappal, adatkezelési tájékoztatóval és letölthető receptfüzettel. A főoldal és az aloldalak asztali és mobil nézetben ellenőrizve vannak. A napjel egységes a weboldalon, a korábbi látványtervekben és a receptfüzetben. A projekt GitHubon van, éles webcím és Netlify-űrlappróba még nincs.
+A D arculatból készült második, retró plakátos változat a kiválasztott irány. A teljes statikus oldal elkészült, kilenc HTML-oldallal, két űrlappal, adatkezelési tájékoztatóval és letölthető receptfüzettel. A főoldal és az aloldalak asztali és mobil nézetben ellenőrizve vannak. A napjel egységes a weboldalon, a korábbi látványtervekben és a receptfüzetben. A projekt GitHubon van, az ingyenes Netlify-telepítés előkészítve; éles webcím és űrlappróba még nincs.
 
 ## Teendők
 
@@ -25,6 +25,7 @@ A D arculatból készült második, retró plakátos változat a kiválasztott i
 - **2026. november 13.:** A CTA-k két stílust kapnak: tömör fő gombot és körvonalas másodlagos gombot. A gombokban nincs nyíl.
 - **2026. november 13.:** A logó háromsugaras napjele azonos arányokkal szerepel a faviconban, a webes fejlécekben és a receptfüzetben.
 - **2026. november 13.:** A pékség címe fiktív. A bemutató oldal nem ad élő térképes útvonalat.
+- **2026. november 17.:** Az oldal fiktív vizsgademóként jelenik meg, később bemutató anyagként is használható. Az éles webcímhez az ingyenes Netlify-alcím megfelelő.
 
 ## Session-napló
 
