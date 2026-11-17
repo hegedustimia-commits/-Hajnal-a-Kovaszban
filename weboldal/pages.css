@@ -23,6 +23,7 @@
 .site-final .cover-sun{width:120px;height:100px;background:url('assets/hajnal-sun-logo.svg') center/contain no-repeat;margin:auto auto 5px}
 .site-final .recipe-cover h2{font-size:clamp(32px,3.3vw,43px)}
 .site-final .paper-steps{transform:none;background:var(--cream);border:1px solid var(--line);border-top:5px solid var(--cherry);box-shadow:6px 6px 0 #d8c4ac}
+.site-final .hours.paper-steps{border-radius:0}
 .site-final .about-morning{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center}
 .site-final .about-morning h2{margin-bottom:30px}
 .site-final .morning-video{max-width:370px;width:100%;justify-self:center;overflow:hidden;border-radius:170px 170px 8px 8px;box-shadow:7px 7px 0 var(--cherry)}
