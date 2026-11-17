@@ -23,6 +23,11 @@
 .site-final .cover-sun{width:120px;height:100px;background:url('assets/hajnal-sun-logo.svg') center/contain no-repeat;margin:auto auto 5px}
 .site-final .recipe-cover h2{font-size:clamp(32px,3.3vw,43px)}
 .site-final .paper-steps{transform:none;background:var(--cream);border:1px solid var(--line);border-top:5px solid var(--cherry);box-shadow:6px 6px 0 #d8c4ac}
+.site-final .about-morning{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center}
+.site-final .about-morning h2{margin-bottom:30px}
+.site-final .morning-video{max-width:370px;width:100%;justify-self:center;overflow:hidden;border-radius:170px 170px 8px 8px;box-shadow:7px 7px 0 var(--cherry)}
+.site-final .morning-video video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:var(--ink)}
+@media(max-width:680px){.site-final .about-morning{grid-template-columns:1fr;gap:36px}.site-final .morning-video{max-width:300px}}
 
 /* Az előrendelés három lépése egy összefüggő útvonalon. */
 .site-final .steps{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;max-width:900px;margin:38px 0 36px}

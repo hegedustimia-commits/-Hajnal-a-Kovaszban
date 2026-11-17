@@ -14,3 +14,6 @@ if(dateInput){
 }
 const contactForm=document.querySelector('form[name="erdeklodes"]');
 if(contactForm&&location.protocol==='file:')contactForm.addEventListener('submit',event=>{event.preventDefault();const error=contactForm.querySelector('.form-error');error.textContent='A próbaoldalon az űrlap még nem küld üzenetet. Az élesítés után működik majd.';error.hidden=false});
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('video[autoplay]').forEach(video=>{video.autoplay=false;video.pause()});
+}
