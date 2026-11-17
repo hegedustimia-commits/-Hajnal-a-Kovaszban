@@ -19,6 +19,7 @@ photos = {
     "baker_oven": "pexels-yasin-onus-520099596-36445126.jpg",
     "dough_hands": "pexels-klaus-nielsen-6294400.jpg",
     "workshop_dough": "pexels-travel-with-lenses-734723610-30918876.jpg",
+    "catalog_bread": "pexels-aygnedalya-296473942-24245231.jpg",
 }
 
 for key, filename in photos.items():

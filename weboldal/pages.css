@@ -32,6 +32,11 @@
 .page-rolunk .inner-hero>div:first-child{grid-column:2;grid-row:1}
 .page-rolunk .inner-hero-image{grid-column:1;grid-row:1;height:440px;border-radius:170px 7px 7px 7px}
 @media(max-width:680px){.page-rolunk .inner-hero{grid-template-columns:1fr}.page-rolunk .inner-hero>div:first-child{grid-column:1;grid-row:1}.page-rolunk .inner-hero-image{grid-column:1;grid-row:2;height:300px}}
+.site-final .catalog-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8%;align-items:center;margin-bottom:38px}
+.site-final .catalog-intro .catalog-heading{margin-bottom:0}
+.site-final .catalog-bread-photo{height:310px;overflow:hidden;border-radius:170px 7px 7px 7px}
+.site-final .catalog-bread-photo img{width:100%;height:100%;object-fit:cover}
+@media(max-width:680px){.site-final .catalog-intro{grid-template-columns:1fr;gap:28px}.site-final .catalog-bread-photo{height:270px}}
 
 /* Az előrendelés három lépése egy összefüggő útvonalon. */
 .site-final .steps{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;max-width:900px;margin:38px 0 36px}
