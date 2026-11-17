@@ -48,6 +48,7 @@ home = home.replace('../../assets/', 'assets/').replace('href="#kinalat"', 'href
 home = home.replace('<div class="hours">', '<div class="hours paper-steps">', 1)
 home = home.replace('<div class="poster-image poster-main"><img src="assets/bread.webp" alt="Kovászos kenyér közelről"', '<div class="poster-image poster-main"><img src="assets/heart_bread.webp" alt="Szív alakú kovászos kenyér"')
 home = re.sub(r'<div class="poster-image poster-side">.*?</div>', '', home, count=1, flags=re.S)
+home = re.sub(r'<div class="round-seal".*?</div>', '', home, count=1, flags=re.S)
 home = re.sub(r'<p class="prototype-note">.*?</p>', '', home)
 home = home.replace('Nézd meg, hol veheted át', 'Előrendelést indítok').replace('href="kapcsolat.html">Előrendelést indítok', 'href="elorendeles.html">Előrendelést indítok')
 home = home.replace('class="text-link"', 'class="button button-secondary"')
