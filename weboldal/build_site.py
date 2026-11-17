@@ -64,6 +64,7 @@ home = home.replace('<div class="steps"><span><b>01</b> Válassz</span><span><b>
 home = home.replace('>Előrendelést indítok <span', '>Előrendelek <span')
 home = home.replace('<div><span>Kedd–péntek</span><strong>7:00–14:00</strong></div><div><span>Szombat</span><strong>7:00–14:00</strong></div>', '<div><span>Kedd–Szombat</span><strong>7:00–14:00</strong></div>')
 home = home.replace('<div class="about-photo"><img src="assets/hands.webp" alt="Lisztes kézzel formált tészta"', '<div class="about-photo"><img src="assets/oven-bread.webp" alt="Frissen sült kovászos kenyerek a kemence előtt"')
+home = re.sub(r'<img(?![^>]*\b(?:loading|fetchpriority)=)', '<img loading="lazy" decoding="async"', home)
 start, end = chrome(dict(slug="index", title="Kovászos pékség és reggeliző Pécsen", description="Friss kovászos kenyér, péksütemény és reggeli Pécs belvárosában. Egész kenyér és torta előrendelhető."))
 (SITE / "index.html").write_text(start + without_button_arrows(home) + end, encoding="utf-8")
 
@@ -119,5 +120,10 @@ page('adatkezeles', 'Adatkezelési tájékoztató', 'Tájékoztató a Hajnal Kov
 
 page('sikeres-rendeles', 'Kérés elküldve', 'Az előrendelési kérés elküldése sikerült.', '<section class="message-page"><span class="eyebrow">HAJNAL / ELŐRENDELÉS</span><h1>Megkaptuk a kérésed.</h1><p>Hamarosan visszajelzünk, hogy tudjuk-e vállalni. A rendelés a visszaigazolásunk után válik véglegessé.</p><a class="button" href="index.html">Vissza a főoldalra ↗</a></section>')
 page('sikeres-uzenet', 'Üzenet elküldve', 'Az üzenet elküldése sikerült.', '<section class="message-page"><span class="eyebrow">HAJNAL / KAPCSOLAT</span><h1>Megkaptuk az üzeneted.</h1><p>Köszönjük, hogy írtál. Hamarosan visszajelzünk.</p><a class="button" href="index.html">Vissza a főoldalra ↗</a></section>')
+
+published_text = ''.join(path.read_text(encoding='utf-8') for pattern in ('*.html', '*.css', '*.js') for path in SITE.glob(pattern))
+for asset in (SITE / 'assets').glob('*.webp'):
+    if asset.name not in published_text:
+        asset.unlink()
 
 print(f"Built site in {SITE}")
