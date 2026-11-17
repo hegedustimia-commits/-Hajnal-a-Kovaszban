@@ -44,9 +44,10 @@
 .page-kinalat .inner-hero .eyebrow{color:#f4c7aa}
 .page-kinalat .inner-hero h1,.page-kinalat .inner-hero p{color:var(--cream)}
 @media(max-width:680px){.page-kinalat .inner-hero{min-height:440px;margin-left:18px;margin-right:18px;padding:38px 24px}.page-kinalat .inner-hero::after{background:linear-gradient(90deg,rgba(37,26,20,.84),rgba(37,26,20,.5))}}
-.site-final .workshop-story-photo{height:310px;margin-top:34px;overflow:hidden;border-radius:7px 140px 7px 7px}
-.site-final .workshop-story-photo img{width:100%;height:100%;object-fit:cover}
-@media(max-width:680px){.site-final .workshop-story{gap:24px}.site-final .workshop-story-photo{height:230px;margin-top:26px}}
+.site-final .workshop-story{min-height:440px;align-items:center;gap:7%;padding:68px 6%;border:0;background:linear-gradient(90deg,rgba(37,26,20,.88),rgba(37,26,20,.76) 55%,rgba(37,26,20,.62)),url('assets/workshop_story.webp') center/cover no-repeat;color:var(--cream)}
+.site-final .workshop-story h2,.site-final .workshop-story p{color:var(--cream)}
+.site-final .workshop-story .eyebrow{color:#f4c7aa}
+@media(max-width:680px){.site-final .workshop-story{gap:22px;padding:48px 26px;background-position:center,right center}}
 
 /* Az előrendelés három lépése egy összefüggő útvonalon. */
 .site-final .steps{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;max-width:900px;margin:38px 0 36px}
