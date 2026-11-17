@@ -22,6 +22,7 @@ photos = {
     "catalog_bread": "pexels-aygnedalya-296473942-24245231.jpg",
     "catalog_hero": "pexels-tahaasamett-14565958.jpg",
     "workshop_story": "congerdesign-dough-3873339.jpg",
+    "heart_bread": "sziv.jpg",
 }
 
 for key, filename in photos.items():
