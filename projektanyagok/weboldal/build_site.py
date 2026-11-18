@@ -2,10 +2,18 @@
 
 from pathlib import Path
 from shutil import copy2
+from html import escape
+import json
+import os
 import re
+from urllib.parse import urlparse
+from xml.etree.ElementTree import Element, SubElement, ElementTree
 
 ROOT = Path(__file__).resolve().parent
 SITE = ROOT.parent.parent / "public"
+SITE_URL = os.environ.get("SITE_URL", "https://hajnal-a-kovaszban.netlify.app").rstrip("/")
+if urlparse(SITE_URL).scheme != "https" or not urlparse(SITE_URL).netloc:
+    raise ValueError("SITE_URL must be an absolute HTTPS URL")
 SITE.mkdir(exist_ok=True)
 (SITE / "assets").mkdir(exist_ok=True)
 
@@ -22,6 +30,52 @@ copy2(ROOT / "pages.js", SITE / "pages.js")
 
 prototype = (ROOT / "tervek" / "02-plakat" / "index.html").read_text(encoding="utf-8")
 
+SEO_PAGES = {
+    "index": ("Kovászos pékség és reggeliző Pécsen | Hajnal", "Friss kovászos kenyér, péksütemény és reggeli Pécs belvárosában. Ismerd meg a fiktív Hajnal pékséget, és kérj előre kenyeret vagy tortát.", "heart_bread.webp"),
+    "kinalat": ("Kovászos kenyér, péksütemény és torta | Hajnal Pécs", "Nézd meg a Hajnal fiktív pécsi pékség kínálatát: kovászos kenyerek, friss péksütemények, reggeli és előrendelhető torták.", "pastry.webp"),
+    "elorendeles": ("Kenyér és torta előrendelés | Hajnal Pécs", "Egész kenyeret vagy tortát kérnél? Írd meg, mit és mikorra szeretnél; a Hajnal fiktív pékség visszajelez az előrendelésről.", "order_bread.webp"),
+    "rolunk": ("Marci és Lili története | Hajnal Kovászos Pékség", "Ismerd meg Marci és Lili fiktív pécsi pékségének történetét, a kovász szerepét és a letölthető kovászos receptfüzetet.", "baker_oven.webp"),
+    "workshop": ("Kovászkészítő workshop Pécsen | Hajnal", "A Hajnal fiktív pékség havi kovászkészítő workshopján megismerheted a kovász első lépéseit. Nézd meg, kinek szól az alkalom.", "workshop_dough.webp"),
+    "kapcsolat": ("Kapcsolat és nyitvatartás | Hajnal Pécs", "A Hajnal fiktív pécsi pékség címe és nyitvatartása: Kedd–Szombat 7:00–14:00. Kérdésed van? Írj nekünk az űrlapon.", "coffee.webp"),
+    "adatkezeles": ("Adatkezelési tájékoztató | Hajnal Kovászos Pékség", "Olvasd el a Hajnal fiktív vizsgaprojekt űrlapjaira vonatkozó adatkezelési mintát és az élesítés előtt véglegesítendő tudnivalókat.", "heart_bread.webp"),
+    "sikeres-rendeles": ("Előrendelési kérés elküldve | Hajnal", "Megkaptuk az előrendelési kérésed. A Hajnal visszajelzése után válik véglegessé a rendelés.", "order_bread.webp"),
+    "sikeres-uzenet": ("Üzenet elküldve | Hajnal Kovászos Pékség", "Megkaptuk az üzeneted. A Hajnal hamarosan visszajelez.", "heart_bread.webp"),
+}
+OG_IMAGE_ALT = {
+    "heart_bread.webp": "Szív alakú kovászos kenyér rusztikus faasztalon",
+    "pastry.webp": "Frissen sült péksütemények",
+    "order_bread.webp": "Felvágott kovászos kenyér a vágódeszkán",
+    "baker_oven.webp": "Pék a kemence előtt, friss tésztával",
+    "workshop_dough.webp": "Aktív kovász egy befőttesüvegben",
+    "coffee.webp": "Kávé és péksütemény",
+}
+
+def page_url(slug):
+    return f"{SITE_URL}/" if slug == "index" else f"{SITE_URL}/{slug}.html"
+
+def business_schema():
+    return {
+        "@context": "https://schema.org",
+        "@type": "Bakery",
+        "@id": f"{SITE_URL}/#pekseg",
+        "name": "Hajnal Kovászos Pékség",
+        "description": "Fiktív pécsi kovászos pékség és reggeliző, vizsgaprojekt.",
+        "url": page_url("index"),
+        "image": f"{SITE_URL}/assets/heart_bread.webp",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Hajnalzug utca 2.",
+            "addressLocality": "Pécs",
+            "addressCountry": "HU",
+        },
+        "openingHoursSpecification": [{
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "07:00",
+            "closes": "14:00",
+        }],
+    }
+
 def without_button_arrows(html):
     def clean(match):
         button = re.sub(r'\s*<span aria-hidden="true">[↗↘↓]</span>', '', match.group(0))
@@ -29,7 +83,27 @@ def without_button_arrows(html):
     return re.sub(r'<(?:a|button)\b[^>]*class="[^"]*\bbutton\b[^"]*"[^>]*>.*?</(?:a|button)>', clean, html, flags=re.S)
 
 def chrome(page):
-    head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{page['title']} | Hajnal Kovászos Pékség</title><meta name="description" content="{page['description']}"><link rel="icon" type="image/svg+xml" href="assets/hajnal-sun.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head><body class="site-final page-{page['slug']}" id="top">'''
+    title, description, image = SEO_PAGES[page['slug']]
+    url = page_url(page['slug'])
+    noindex = page['slug'].startswith('sikeres-')
+    meta = [
+        f'<title>{escape(title)}</title>',
+        f'<meta name="description" content="{escape(description, quote=True)}">',
+        f'<link rel="canonical" href="{escape(url, quote=True)}">',
+        '<meta property="og:type" content="website">',
+        '<meta property="og:locale" content="hu_HU">',
+        '<meta property="og:site_name" content="Hajnal Kovászos Pékség">',
+        f'<meta property="og:title" content="{escape(title, quote=True)}">',
+        f'<meta property="og:description" content="{escape(description, quote=True)}">',
+        f'<meta property="og:url" content="{escape(url, quote=True)}">',
+        f'<meta property="og:image" content="{SITE_URL}/assets/{image}">',
+        f'<meta property="og:image:alt" content="{escape(OG_IMAGE_ALT[image], quote=True)}">',
+    ]
+    if noindex:
+        meta.append('<meta name="robots" content="noindex, follow">')
+    if page['slug'] in ('index', 'kapcsolat'):
+        meta.append('<script type="application/ld+json">' + json.dumps(business_schema(), ensure_ascii=False) + '</script>')
+    head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">{''.join(meta)}<link rel="icon" type="image/svg+xml" href="assets/hajnal-sun.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head><body class="site-final page-{page['slug']}" id="top">'''
     header = re.search(r'(<a class="skip".*?</header>)', prototype, re.S).group(1)
     header = header.replace('href="#top"', 'href="index.html"').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
     header = header.replace('<span>Pécs belvárosában</span>', '<span>Fiktív vizsgademó · Pécs</span>')
@@ -126,5 +200,12 @@ used_webp = set(re.findall(r'assets/([\w.-]+\.webp)', published_text))
 for asset in (SITE / 'assets').glob('*.webp'):
     if asset.name not in used_webp:
         asset.unlink()
+
+sitemap = Element('urlset', xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
+for slug in SEO_PAGES:
+    if not slug.startswith('sikeres-'):
+        SubElement(SubElement(sitemap, 'url'), 'loc').text = page_url(slug)
+ElementTree(sitemap).write(SITE / 'sitemap.xml', encoding='utf-8', xml_declaration=True)
+(SITE / 'robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n', encoding='utf-8')
 
 print(f"Built site in {SITE}")
