@@ -23,10 +23,20 @@ copy2(ROOT / "assets" / "hajnal-sun.svg", SITE / "assets" / "hajnal-sun.svg")
 copy2(ROOT / "assets" / "hajnal-sun-logo.svg", SITE / "assets" / "hajnal-sun-logo.svg")
 copy2(ROOT.parent / "képek" / "15670084-uhd_1440_2560_30fps.mp4", SITE / "assets" / "hajnal-reggel.mp4")
 copy2(ROOT.parent / "letoltheto" / "hajnal-kovaszos-receptek.pdf", SITE / "assets" / "hajnal-kovaszos-receptek.pdf")
-copy2(ROOT / "style.css", SITE / "style.css")
 copy2(ROOT / "site.js", SITE / "site.js")
-copy2(ROOT / "pages.css", SITE / "pages.css")
 copy2(ROOT / "pages.js", SITE / "pages.js")
+(SITE / "site.css").write_text(
+    (ROOT / "style.css").read_text(encoding="utf-8") + "\n" +
+    (ROOT / "pages.css").read_text(encoding="utf-8"),
+    encoding="utf-8",
+)
+for old_css in ("style.css", "pages.css"):
+    old_path = SITE / old_css
+    if old_path.exists():
+        old_path.unlink()
+(SITE / "fonts").mkdir(exist_ok=True)
+for font in (ROOT / "fonts").iterdir():
+    copy2(font, SITE / "fonts" / font.name)
 
 prototype = (ROOT / "tervek" / "02-plakat" / "index.html").read_text(encoding="utf-8")
 
@@ -82,6 +92,20 @@ def without_button_arrows(html):
         return re.sub(r'\s+[↗↘↓](?=</(?:a|button)>)', '', button)
     return re.sub(r'<(?:a|button)\b[^>]*class="[^"]*\bbutton\b[^"]*"[^>]*>.*?</(?:a|button)>', clean, html, flags=re.S)
 
+def responsive_images(html):
+    variants = {
+        "heart_bread": ("heart_bread-768.webp 768w, assets/heart_bread-960.webp 960w, assets/heart_bread.webp 1500w", "(max-width: 680px) calc(100vw - 36px), 900px"),
+        "pastry": ("pastry-750.webp 750w, assets/pastry.webp 1125w", "(max-width: 680px) calc(100vw - 36px), 580px"),
+        "cake": ("cake-750.webp 750w, assets/cake.webp 1000w", "(max-width: 680px) calc(100vw - 36px), 580px"),
+        "slice": ("slice-750.webp 750w, assets/slice.webp 1000w", "(max-width: 680px) calc(100vw - 36px), 580px"),
+    }
+    for name, (srcset, sizes) in variants.items():
+        html = html.replace(
+            f'src="assets/{name}.webp"',
+            f'src="assets/{name}.webp" srcset="assets/{srcset}" sizes="{sizes}"',
+        )
+    return html
+
 def chrome(page):
     title, description, image = SEO_PAGES[page['slug']]
     url = page_url(page['slug'])
@@ -103,7 +127,7 @@ def chrome(page):
         meta.append('<meta name="robots" content="noindex, follow">')
     if page['slug'] in ('index', 'kapcsolat'):
         meta.append('<script type="application/ld+json">' + json.dumps(business_schema(), ensure_ascii=False) + '</script>')
-    head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">{''.join(meta)}<link rel="icon" type="image/svg+xml" href="assets/hajnal-sun.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pages.css"></head><body class="site-final page-{page['slug']}" id="top">'''
+    head = f'''<!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">{''.join(meta)}<link rel="icon" type="image/svg+xml" href="assets/hajnal-sun.svg"><link rel="stylesheet" href="site.css"></head><body class="site-final page-{page['slug']}" id="top">'''
     header = re.search(r'(<a class="skip".*?</header>)', prototype, re.S).group(1)
     header = header.replace('href="#top"', 'href="index.html"').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
     header = header.replace('<span>Pécs belvárosában</span>', '<span>Fiktív vizsgademó · Pécs</span>')
@@ -115,7 +139,7 @@ def chrome(page):
 
 def page(slug, title, description, content):
     start, end = chrome(dict(slug=slug, title=title, description=description))
-    (SITE / f"{slug}.html").write_text(start + '<main id="tartalom">' + without_button_arrows(content) + '</main>' + end, encoding="utf-8")
+    (SITE / f"{slug}.html").write_text(start + '<main id="tartalom">' + responsive_images(without_button_arrows(content)) + '</main>' + end, encoding="utf-8")
 
 home = re.search(r'(<main id="tartalom">.*?</main>)', prototype, re.S).group(1)
 home = home.replace('../../assets/', 'assets/').replace('href="#kinalat"', 'href="kinalat.html"').replace('href="#rolunk"', 'href="rolunk.html"').replace('href="#workshop"', 'href="workshop.html"').replace('href="#kapcsolat"', 'href="kapcsolat.html"').replace('href="#elorendeles"', 'href="elorendeles.html"')
@@ -140,7 +164,7 @@ home = home.replace('<div><span>Kedd–péntek</span><strong>7:00–14:00</stron
 home = home.replace('<div class="about-photo"><img src="assets/hands.webp" alt="Lisztes kézzel formált tészta"', '<div class="about-photo"><img src="assets/oven-bread.webp" alt="Frissen sült kovászos kenyerek a kemence előtt"')
 home = re.sub(r'<img(?![^>]*\b(?:loading|fetchpriority)=)', '<img loading="lazy" decoding="async"', home)
 start, end = chrome(dict(slug="index", title="Kovászos pékség és reggeliző Pécsen", description="Friss kovászos kenyér, péksütemény és reggeli Pécs belvárosában. Egész kenyér és torta előrendelhető."))
-(SITE / "index.html").write_text(start + without_button_arrows(home) + end, encoding="utf-8")
+(SITE / "index.html").write_text(start + responsive_images(without_button_arrows(home)) + end, encoding="utf-8")
 
 def hero(eyebrow, title, lead, image=None, alt=""):
     media = f'<div class="inner-hero-image"><img src="assets/{image}.webp" alt="{alt}"></div>' if image else ''
@@ -189,7 +213,6 @@ page('kapcsolat', 'Kapcsolat és nyitvatartás', 'A Hajnal Kovászos Pékség fi
 
 privacy = hero('ADATKEZELÉS / TÁJÉKOZTATÓ', 'Hogyan kezeljük az űrlapokon megadott adatokat?', 'Ez a fiktív vizsgaprojekt adatkezelési mintája. Az éles működés előtt a tényleges adatkezelő adataival és a választott szolgáltatásokkal kell véglegesíteni.')
 privacy += '''<section class="content-section privacy-content"><div class="privacy-callout"><span class="stamp">VIZSGAPROJEKT</span><p>A Hajnal Kovászos Pékség fiktív vállalkozás. A helyben megnyitott próbaoldal űrlapjai nem küldenek adatot. Ez a tájékoztató a tervezett éles működést írja le, és önmagában nem helyettesíti a tényleges üzemeltető adataival véglegesített tájékoztatót.</p></div><h2>1. Az adatkezelő</h2><p>Az oldal tervezett adatkezelője a Hajnal Kovászos Pékség üzemeltetője. A vállalkozás neve és címe a vizsgamunkában fiktív. Éles használat előtt itt fel kell tüntetni a tényleges adatkezelő nevét, székhelyét és olyan elérhetőségét, amelyen adatvédelmi kérelmeket fogad.</p><h2>2. Milyen adatokat kérünk?</h2><p>Az előrendelő űrlapon a választott terméket, mennyiséget, az átvétel napját, a rendelés részleteit, a nevet, a telefonszámot, az e-mail címet és az esetleges megjegyzést kérjük. A kapcsolatfelvételi űrlapon nevet, e-mail címet, témát és üzenetet kérünk. Az űrlapok nem kérnek bankkártyaadatot; az átvétel és a fizetés a boltban történik.</p><h2>3. Miért kezeljük az adatokat?</h2><p>Az előrendelési adatokat a kérés elbírálására, visszaigazolására és a bolti átvétel egyeztetésére használnánk. Ennek tervezett jogalapja a szerződéskötést megelőző, a látogató kérésére tett lépés (GDPR 6. cikk (1) bekezdés b) pont). A kapcsolatfelvételi adatokat az üzenet megválaszolására használnánk; ennek tervezett jogalapja az üzemeltető jogos érdeke a beérkező kérdések kezelésében (GDPR 6. cikk (1) bekezdés f) pont). Marketingcélú feliratkozás nincs.</p><h2>4. Ki férhet hozzá?</h2><p>A megadott adatokhoz a tényleges üzemeltető arra jogosult munkatársai férhetnek hozzá. A tervezett Netlify Forms szolgáltatás a beküldött űrlapadatokat tárolja és az üzemeltető számára elérhetővé teszi. Az élesítés előtt a választott tárhely- és űrlapszolgáltató adatfeldolgozói feltételeit, alvállalkozóit és az esetleges nemzetközi adattovábbítást ellenőrizni kell.</p><h2>5. Mennyi ideig őrizzük meg?</h2><p>A megőrzési időt az éles üzemeltetőnek a tényleges rendelési és ügyintézési folyamathoz kell meghatároznia, és a Netlify felületén is következetesen végrehajtania. A vizsgaprojekt jelenlegi változata nem gyűjt és nem őriz meg valódi űrlapbeküldéseket.</p><h2>6. Milyen jogaid vannak?</h2><p>Az alkalmazandó jogi feltételek szerint kérheted a rád vonatkozó adatokhoz való hozzáférést, azok helyesbítését vagy törlését, az adatkezelés korlátozását, és tiltakozhatsz a jogos érdeken alapuló kezelés ellen. Egyes esetekben adathordozhatósághoz is jogod lehet. A kérelmek fogadására szolgáló tényleges elérhetőséget az élesítés előtt itt kell feltüntetni. Panasszal a Nemzeti Adatvédelmi és Információszabadság Hatósághoz is fordulhatsz.</p><h2>7. Automatikus döntés és sütik</h2><p>Az űrlapok alapján nem történik automatikus, joghatással járó döntéshozatal. A jelenlegi próbaoldal nem használ saját analitikai mérőkódot vagy marketingcélú sütit. Ha ezek később bekerülnek, a tájékoztatót frissíteni kell.</p><p class="privacy-updated">Utolsó frissítés: 2026. november 13. · Fiktív vizsgaprojekt, élesítés előtti minta.</p></section>'''
-privacy = privacy.replace('A jelenlegi próbaoldal nem használ saját analitikai mérőkódot vagy marketingcélú sütit.', 'A jelenlegi próbaoldal nem használ saját analitikai mérőkódot vagy marketingcélú sütit. A betűkészletek külső Google Fonts szolgáltatásból is betöltődhetnek, ezért a böngésző technikai kapcsolatot létesíthet a szolgáltatóval. Élesítés előtt helyben tárolt betűkészlet vagy véglegesített tájékoztatás szükséges.')
 page('adatkezeles', 'Adatkezelési tájékoztató', 'Tájékoztató a Hajnal Kovászos Pékség vizsgaprojekt űrlapjain megadott adatok tervezett kezeléséről.', privacy)
 
 page('sikeres-rendeles', 'Kérés elküldve', 'Az előrendelési kérés elküldése sikerült.', '<section class="message-page"><span class="eyebrow">HAJNAL / ELŐRENDELÉS</span><h1>Megkaptuk a kérésed.</h1><p>Hamarosan visszajelzünk, hogy tudjuk-e vállalni. A rendelés a visszaigazolásunk után válik véglegessé.</p><a class="button" href="index.html">Vissza a főoldalra ↗</a></section>')

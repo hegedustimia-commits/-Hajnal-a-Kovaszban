@@ -24,3 +24,7 @@ python projektanyagok/weboldal/build_site.py
 ```
 
 A Hajnal és a weboldalon szereplő cím fiktív vizsgademó. Az űrlap utáni köszönőoldalak `noindex` jelölést kapnak, és nem szerepelnek a sitemapben.
+
+## Betöltési sebesség
+
+A kész oldal egyetlen `public/site.css` stíluslapot használ. A DM Sans és Fraunces betűk a `public/fonts/` mappából töltődnek be, licenceikkel együtt. A főoldal nyitóképe és a termékkártyák képei a böngésző szélességéhez illő WebP-változatokból választhatók a `srcset` alapján. A forrásképek és a stíluslapok a `projektanyagok/weboldal/` mappában vannak.
