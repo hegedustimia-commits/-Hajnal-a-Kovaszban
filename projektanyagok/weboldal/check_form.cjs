@@ -3,7 +3,7 @@ const path = require('path');
 (async()=>{
   const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
   const page=await browser.newPage();
-  await page.goto('file:///'+path.join(__dirname,'hajnal-site','elorendeles.html').replace(/\\/g,'/'),{waitUntil:'domcontentloaded'});
+  await page.goto('file:///'+path.join(__dirname,'..','..','public','elorendeles.html').replace(/\\/g,'/'),{waitUntil:'domcontentloaded'});
   await page.locator('#termek').selectOption('kenyer');
   await page.locator('#reszletek').fill('Klasszikus kovászos kenyér');
   await page.locator('#nev').fill('Teszt Elek');

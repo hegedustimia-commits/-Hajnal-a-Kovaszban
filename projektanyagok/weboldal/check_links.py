@@ -2,7 +2,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
-root = Path(__file__).resolve().parent / 'hajnal-site'
+root = Path(__file__).resolve().parent.parent.parent / 'public'
 
 class Refs(HTMLParser):
     def __init__(self):

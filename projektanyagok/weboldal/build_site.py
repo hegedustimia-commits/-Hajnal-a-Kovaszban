@@ -5,7 +5,7 @@ from shutil import copy2
 import re
 
 ROOT = Path(__file__).resolve().parent
-SITE = ROOT / "hajnal-site"
+SITE = ROOT.parent.parent / "public"
 SITE.mkdir(exist_ok=True)
 (SITE / "assets").mkdir(exist_ok=True)
 
@@ -122,8 +122,9 @@ page('sikeres-rendeles', 'Kérés elküldve', 'Az előrendelési kérés elküld
 page('sikeres-uzenet', 'Üzenet elküldve', 'Az üzenet elküldése sikerült.', '<section class="message-page"><span class="eyebrow">HAJNAL / KAPCSOLAT</span><h1>Megkaptuk az üzeneted.</h1><p>Köszönjük, hogy írtál. Hamarosan visszajelzünk.</p><a class="button" href="index.html">Vissza a főoldalra ↗</a></section>')
 
 published_text = ''.join(path.read_text(encoding='utf-8') for pattern in ('*.html', '*.css', '*.js') for path in SITE.glob(pattern))
+used_webp = set(re.findall(r'assets/([\w.-]+\.webp)', published_text))
 for asset in (SITE / 'assets').glob('*.webp'):
-    if asset.name not in published_text:
+    if asset.name not in used_webp:
         asset.unlink()
 
 print(f"Built site in {SITE}")

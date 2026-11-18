@@ -3,7 +3,7 @@
 Állapot: egyeztetett oldaltérkép és szakaszstruktúra; a szövegirány szerkesztés alatt, 2026. november 12.  
 Forrás: `brief-3-pekseg.md`, `Vizsgamunka.md`, a `képek/` mappa.
 
-Választott arculat: [D – Hajnali retró](design-system-hibrid.md). A három főoldali tervből a **2. retró plakát** elrendezést választottuk; a teljes statikus oldal a `weboldal/hajnal-site/` mappában épül.
+Választott arculat: [D – Hajnali retró](design-system-hibrid.md). A három főoldali tervből a **2. retró plakát** elrendezést választottuk; a teljes statikus oldal a projektgyökér `public/` mappájában épül.
 
 ## 1. Kiindulás és cél
 

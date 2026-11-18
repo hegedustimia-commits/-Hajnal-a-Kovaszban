@@ -10,12 +10,12 @@ Mindhárom a választott D, „Hajnali retró” arculat színeit és motívumai
 
 ## Kiválasztott változat és teljes oldal
 
-A **2. retró plakát** tervet választottuk. Az ebből készült hatoldalas statikus weboldal a `hajnal-site/` mappában van. Nyitó fájl: `hajnal-site/index.html`. A többi oldal: `kinalat.html`, `elorendeles.html`, `rolunk.html`, `workshop.html`, `kapcsolat.html`. Két külön köszönőoldal tartozik az űrlapokhoz.
+A **2. retró plakát** tervet választottuk. Az ebből készült statikus weboldal a projektgyökér `public/` mappájában van. Nyitó fájl: `public/index.html`. A többi oldal: `kinalat.html`, `elorendeles.html`, `rolunk.html`, `workshop.html`, `kapcsolat.html`. Két külön köszönőoldal tartozik az űrlapokhoz.
 
 Az előrendelő és kapcsolatfelvételi űrlap Netlify Forms jelölést kapott. Helyi `file://` megnyitáskor próbamódban marad, nem küld adatot. Az éles Netlify telepítés után űrlapbeküldést és célba érkezést is tesztelni kell. A fiktív címhez élő térképes útvonal nem tartozik.
 
-A Rólunk oldalról letölthető receptfüzet a `hajnal-site/assets/hajnal-kovaszos-receptek.pdf` fájlban van. A borító a választott plakátos arculathoz igazodik.
+A Rólunk oldalról letölthető receptfüzet a `public/assets/hajnal-kovaszos-receptek.pdf` fájlban van. A borító a választott plakátos arculathoz igazodik.
 
 A böngészős ellenőrzés képei az `ellenorzes/teljes-oldal/` mappában vannak. A `build_site.py` a kiválasztott tervből újraépíti a teljes oldalt, a `check_links.py` a helyi hivatkozásokat ellenőrzi.
 
-Az új weboldal megtekintéséhez a `weboldal/hajnal-site/index.html` fájlt nyisd meg a böngészőben.
+Az új weboldal megtekintéséhez a projektgyökér `public/index.html` fájlt nyisd meg a böngészőben.

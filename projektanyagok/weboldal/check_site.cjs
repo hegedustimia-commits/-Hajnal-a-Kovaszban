@@ -4,7 +4,7 @@ const fs = require('fs');
 
 (async () => {
   const browser = await chromium.launch({ headless: true, executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
-  const root = path.join(__dirname, 'hajnal-site');
+  const root = path.join(__dirname, '..', '..', 'public');
   const out = path.join(__dirname, 'ellenorzes', 'teljes-oldal');
   fs.mkdirSync(out, { recursive: true });
   const pages = ['index', 'kinalat', 'elorendeles', 'rolunk', 'workshop', 'kapcsolat', 'adatkezeles'];

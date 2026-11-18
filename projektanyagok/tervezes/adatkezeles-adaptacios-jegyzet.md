@@ -1,6 +1,6 @@
 # Adatvédelmi minta alkalmazása a Hajnal weboldalán
 
-Forrás: `Adatvédelmi nyilatkozat - Fegyvertár - 2024-07-29 - WPKurzus melléklet.docx` (a projektmappában). Az új, arculathoz igazított weboldali tájékoztató: `weboldal/hajnal-site/adatkezeles.html`.
+Forrás: `Adatvédelmi nyilatkozat - Fegyvertár - 2024-07-29 - WPKurzus melléklet.docx` (a `projektanyagok/` mappában). Az új, arculathoz igazított weboldali tájékoztató: `public/adatkezeles.html`.
 
 A mellékelt DOCX általános sablon. A Hajnal oldalán az előrendelő és a kapcsolatfelvételi űrlap releváns. A mintában szereplő regisztráció, bejelentkezés, hírlevél, direkt marketing, nyereményjáték, Google Analytics és Facebook sütik jelenleg nincsenek az oldalon, ezért ezeket nem állítjuk az adatkezelési tájékoztatóban. A sablonban üresen hagyott adatkezelői mezőket sem töltöttük fel kitalált jogi adatokkal.
 

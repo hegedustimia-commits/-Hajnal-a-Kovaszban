@@ -2,7 +2,7 @@
 
 ## Mi ez
 
-Fiktív pécsi kovászos pékség és reggeliző reszponzív, statikus weboldala. A beadási feltételek a `Vizsgamunka.md` fájlban, a brief a `brief-3-pekseg.md` fájlban, az UX és arculati tervek a `tervezes/` mappában találhatók. A készülő oldal helyi nyitófájlja: `weboldal/hajnal-site/index.html`. GitHub: https://github.com/hegedustimia-commits/-Hajnal-a-Kovaszban
+Fiktív pécsi kovászos pékség és reggeliző reszponzív, statikus weboldala. A beadási feltételek a `Vizsgamunka.md` fájlban, a brief a `brief-3-pekseg.md` fájlban, az UX és arculati tervek a `tervezes/` mappában találhatók. A kész oldal helyi nyitófájlja: `../public/index.html`. GitHub: https://github.com/hegedustimia-commits/-Hajnal-a-Kovaszban
 
 ## Hol tartunk most
 
