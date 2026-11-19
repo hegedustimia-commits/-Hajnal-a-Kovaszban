@@ -53,6 +53,8 @@ errors = []
 titles, descriptions = set(), set()
 indexable_urls = set()
 for path in sorted(SITE.glob("*.html")):
+    if path.name.startswith("google") and path.name.endswith(".html"):
+        continue  # Search Console verification file, not a site page.
     page = PageAudit()
     page.feed(path.read_text(encoding="utf-8"))
     label = path.name

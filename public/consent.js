@@ -1,5 +1,4 @@
-/* A GA4-azonosítót az éles bekötéskor itt kell megadni. Üresen nem töltődik mérőkód. */
-const GA4_MEASUREMENT_ID = '';
+const GA4_MEASUREMENT_ID = 'G-K5SDZEJNFE';
 
 (() => {
   if (!/^G-[A-Z0-9]+$/.test(GA4_MEASUREMENT_ID)) {
@@ -28,7 +27,15 @@ const GA4_MEASUREMENT_ID = '';
     localStorage.setItem(key, value);
     banner.hidden = true;
     if (value === 'accepted') loadAnalytics();
-    else if (loaded) location.reload();
+    else if (loaded) {
+      for (const cookie of document.cookie.split(';')) {
+        const name = cookie.trim().split('=')[0];
+        if (name === '_ga' || name.startsWith('_ga_')) {
+          document.cookie = name + '=; Max-Age=0; path=/';
+        }
+      }
+      location.reload();
+    }
   }
 
   const banner = document.createElement('section');
