@@ -16,6 +16,9 @@ if urlparse(SITE_URL).scheme != "https" or not urlparse(SITE_URL).netloc:
     raise ValueError("SITE_URL must be an absolute HTTPS URL")
 SITE.mkdir(exist_ok=True)
 (SITE / "assets").mkdir(exist_ok=True)
+(SITE / "googlebba6e953c72f0733.html").write_text(
+    "google-site-verification: googlebba6e953c72f0733.html\n", encoding="utf-8"
+)
 
 for asset in (ROOT / "assets").glob("*.webp"):
     copy2(asset, SITE / "assets" / asset.name)

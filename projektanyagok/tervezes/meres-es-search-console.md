@@ -5,8 +5,8 @@ Az oldalon jelenleg nincs Google Analytics mérés. A `public/sitemap.xml` és `
 ## Search Console
 
 1. A [Google Search Console](https://search.google.com/search-console/) felületén vegyél fel **URL-előtag** tulajdont ezzel a címmel: `https://hajnal-a-kovaszban.netlify.app/`.
-2. Válaszd a **HTML-címke** igazolást. A kapott `google-site-verification` címkét küldd el, hogy az oldal `<head>` részébe beilleszthessem. Az igazolásig ne kattints az Ellenőrzés gombra.
-3. A címke élesítése után indítsd el az igazolást, majd a **Webhelytérképek** résznél add meg: `https://hajnal-a-kovaszban.netlify.app/sitemap.xml`.
+2. A **HTML-fájl** igazoláshoz a `googlebba6e953c72f0733.html` fájl elkészült a webhely gyökerében. Miután élesben elérhető, kattints az **Ellenőrzés** gombra a Search Console-ban.
+3. Sikeres igazolás után a **Webhelytérképek** résznél add meg: `https://hajnal-a-kovaszban.netlify.app/sitemap.xml`.
 
 ## Google Analytics 4 és hozzájárulás
 
