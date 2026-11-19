@@ -69,3 +69,7 @@
   .site-final .steps li span{text-align:left;font-size:16px}
   .site-final .steps b{width:52px;height:52px}
 }
+
+.footer-legal button{border:0;background:none;color:inherit;text-decoration:underline;cursor:pointer;margin-left:22px;padding:0;font-size:inherit}
+.cookie-banner[hidden]{display:none}.cookie-banner{position:fixed;z-index:1000;left:20px;right:20px;bottom:20px;max-width:920px;margin:auto;display:flex;align-items:center;gap:24px;padding:22px 26px;background:var(--cream);color:var(--ink);border:1px solid var(--line);border-top:5px solid var(--cherry);box-shadow:6px 6px 0 #2f241d55}.cookie-banner strong{font:650 24px var(--serif)}.cookie-banner p{font-size:14px;line-height:1.5;margin:5px 0 0}.cookie-actions{display:flex;gap:10px;flex-shrink:0}.cookie-actions .button{min-height:44px;cursor:pointer;border:1px solid var(--crust)}@media(max-width:680px){.cookie-banner{left:12px;right:12px;bottom:12px;display:block;padding:17px}.cookie-banner strong{font-size:21px}.cookie-actions{margin-top:14px}.cookie-actions .button{flex:1;padding:10px;font-size:12px}.footer-legal button{display:block;margin:14px 0 0}}
+.footer-legal button[hidden]{display:none}
